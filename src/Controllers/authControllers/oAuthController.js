@@ -56,7 +56,10 @@ export const oAuthJoin = async (req, res) => {
       .json({ error: "소셜 계정을 생성하는데 실패했습니다." });
   }
 
-  const token = jwt.sign({ nickname: nickname }, SECRET_KEY);
+  const token = jwt.sign(
+    { nickname: nickname },
+    SECRET_KEY || process.env.SECRET_KEY
+  );
 
   res.json({ ok: true, token });
 };
