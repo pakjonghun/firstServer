@@ -14,7 +14,7 @@ export const login = async (req, res) => {
     if (!user) {
       res
         .status(401)
-        .send({ errorMessage: "아이디 또는 비밀번호를 다시 확인해주세요." });
+        .json({ errorMessage: "아이디 또는 비밀번호를 다시 확인해주세요." });
       return;
     }
 
@@ -42,7 +42,7 @@ export const join = async (req, res) => {
       nickname,
     });
 
-    res.send({});
+    res.json({});
   } catch (e) {
     console.log(e);
     return res.json({
