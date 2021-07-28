@@ -6,7 +6,7 @@ import {
 } from "../Controllers/detailControllers/searchResult";
 
 const detailRouter = express.Router();
-detailRouter.post("/", getResult);
+detailRouter.post("/search", getResult);
 detailRouter.get("/:contentid", getCourse);
-detailRouter.get("/", getCate);
+detailRouter.get("/category", getCate);
 export default detailRouter;
