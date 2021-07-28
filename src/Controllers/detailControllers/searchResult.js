@@ -14,8 +14,15 @@ export const getResult = async (req, res) => {
       }
     }
 
-    const { lat, lng, areaCode, contentType } = req.body;
-    const data = await getWithInKm(lat, lng, 200, areaCode, contentType);
+    const { lat, lng, areaCode, contentType, startDate, category } = req.body;
+    const data = await getWithInKm(
+      lat,
+      lng,
+      200,
+      areaCode,
+      contentType,
+      category
+    );
 
     return res.json({ ok: true, data });
   } catch (e) {
@@ -55,13 +62,24 @@ export const getCourse = async (req, res) => {
 export const getCate = async (req, res) => {
   const getQuery = req.query;
   for (let i in getQuery) {
-    if (getQuery[i].length <= 0 || getQuery[i].length > 20) {
+    if (getQuery[i].length <= 0 || getQuery[i].length > 30) {
       return res.json({ ok: true, error: "올바른 값을 입력하세요" });
     }
   }
 
   const { lat, lng, areaCode, contentType, cat2 } = req.query;
-  const newAreaCode = areaCode.split(",");
+  let newAreaCode = [];
+  if (areaCode.includes(",")) {
+    newAreaCode = areaCode.trim().split(",");
+  } else if (!String(areaCode).trim().includes(",")) {
+    newAreaCode.push(areaCode.trim());
+  }
+  let newCat2 = [];
+  if (cat2.includes(",")) {
+    newCat2 = cat2.trim().split(",");
+  } else if (!cat2.trim().includes(",")) {
+    newCat2.push(cat2.trim());
+  }
 
   try {
     const data = await getWithInKm(
@@ -70,7 +88,7 @@ export const getCate = async (req, res) => {
       200,
       newAreaCode,
       contentType,
-      cat2
+      newCat2
     );
 
     return res.json({ ok: true, data });

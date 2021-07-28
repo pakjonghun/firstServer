@@ -47,16 +47,26 @@ export const getWithInKm = async (
         cat1: 1,
         cat2: 1,
         cat3: 1,
+        firstimage: 1,
       }
     );
     allData.push(...results);
   }
-
   const result = [];
 
   for (let i of allData) {
-    const { contentid, mapy, mapx, addr1, title, overview, cat1, cat2, cat3 } =
-      i;
+    const {
+      contentid,
+      mapy,
+      mapx,
+      addr1,
+      title,
+      overview,
+      cat1,
+      cat2,
+      cat3,
+      firstimage,
+    } = i;
     if (!mapx || !mapy) {
       continue;
     }
@@ -76,6 +86,7 @@ export const getWithInKm = async (
         overview,
         cat1,
         cat2,
+        firstimage,
         distance: Math.round(distance),
       });
     }
