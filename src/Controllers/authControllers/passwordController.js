@@ -1,5 +1,5 @@
 import { SHA256 } from "crypto-js";
-import user from "../../model/user";
+import User from "../../model/User";
 import { sendMail } from "../../sendMail";
 
 export const findPassword = async (req, res) => {
@@ -14,7 +14,7 @@ export const findPassword = async (req, res) => {
   const { id } = req.body;
 
   try {
-    const exist = await user.findOne({ id });
+    const exist = await User.findOne({ id });
     if (!exist) {
       return res.json({ ok: false, error: "계정이 존재하지 않습니다." });
     }
@@ -23,7 +23,7 @@ export const findPassword = async (req, res) => {
     const newPassword = SHA256(randomKey).toString();
     const password = SHA256(newPassword).toString();
 
-    await user.updateOne({ id }, { $set: { password } });
+    await User.updateOne({ id }, { $set: { password } });
     sendMail(id, newPassword);
     return res.json({ ok: true });
   } catch (e) {
@@ -52,7 +52,7 @@ export const changePassword = async (req, res) => {
   const { id, newPassword, previousPassword } = req.body;
   const encryptedPassword = SHA256(previousPassword).toString();
   try {
-    const exist = await user.exists({ id, password: encryptedPassword });
+    const exist = await User.exists({ id, password: encryptedPassword });
     if (!exist) {
       return res.json({
         ok: false,
@@ -61,7 +61,7 @@ export const changePassword = async (req, res) => {
     }
 
     const password = SHA256(newPassword).toString();
-    await user.updateOne({ id }, { $set: { password } });
+    await User.updateOne({ id }, { $set: { password } });
 
     return res.json({ ok: true });
   } catch (e) {
