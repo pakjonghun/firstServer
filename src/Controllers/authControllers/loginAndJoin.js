@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import SHA256 from "crypto-js/sha256";
 import User from "../../model/User";
-import SECRET_KEY from "../../config/secretKey";
+// import SECRET_KEY from "../../config/secretKey";
 
 export const login = async (req, res) => {
   try {
@@ -18,7 +18,10 @@ export const login = async (req, res) => {
       return;
     }
 
-    const token = jwt.sign({ nickname: user.nickname }, SECRET_KEY);
+    const token = jwt.sign(
+      { nickname: user.nickname },
+      process.env.SECRET_KEY || SECRET_KEY
+    );
 
     res.send({ token });
   } catch (e) {
