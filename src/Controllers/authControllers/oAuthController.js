@@ -1,6 +1,6 @@
 import User from "../../model/User";
 import jwt from "jsonwebtoken";
-import Key from "../../config/secretKey";
+import { Key } from "../../config/secretKey";
 export const oAuth = async (req, res) => {
   const { socialId } = req.body;
 
