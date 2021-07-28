@@ -18,7 +18,7 @@ export const oAuth = async (req, res) => {
 
   const token = jwt.sign(
     { nickname: user.nickname },
-    SECRET_KEY || process.env.SECRET_KEY
+    process.env.SECRET_KEY || SECRET_KEY
   );
 
   res.json({ action: "login", token });
@@ -58,7 +58,7 @@ export const oAuthJoin = async (req, res) => {
 
   const token = jwt.sign(
     { nickname: nickname },
-    SECRET_KEY || process.env.SECRET_KEY
+    process.env.SECRET_KEY || SECRET_KEY
   );
 
   res.json({ ok: true, token });
