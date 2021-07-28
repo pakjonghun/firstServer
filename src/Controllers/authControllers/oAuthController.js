@@ -1,6 +1,6 @@
 import User from "../../model/User";
 import jwt from "jsonwebtoken";
-import SECRET_KEY from "../../config/secretKey";
+import Key from "../../config/secretKey";
 export const oAuth = async (req, res) => {
   const { socialId } = req.body;
 
@@ -17,7 +17,7 @@ export const oAuth = async (req, res) => {
 
   const token = jwt.sign(
     { nickname: user.nickname },
-    process.env.SECRET_KEY || SECRET_KEY
+    process.env.SECRET_KEY || Key
   );
 
   res.json({ action: "login", token });
@@ -55,10 +55,7 @@ export const oAuthJoin = async (req, res) => {
       .json({ error: "소셜 계정을 생성하는데 실패했습니다." });
   }
 
-  const token = jwt.sign(
-    { nickname: nickname },
-    process.env.SECRET_KEY || SECRET_KEY
-  );
+  const token = jwt.sign({ nickname: nickname }, process.env.SECRET_KEY || Key);
 
   res.json({ ok: true, token });
 };
