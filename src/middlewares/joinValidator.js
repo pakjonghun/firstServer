@@ -1,4 +1,4 @@
-import User from "../model/user";
+import User from "../model/User";
 import Joi from "joi";
 
 const joinValidation = Joi.object({
