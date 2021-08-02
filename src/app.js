@@ -6,6 +6,7 @@ import "./getDistance";
 import express from "express";
 import detailRouter from "./Routers/detailRouter";
 import authRouter from "./Routers/authRouter";
+import cors from "cors";
 
 const app = express();
 
