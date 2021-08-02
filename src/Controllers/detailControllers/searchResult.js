@@ -14,13 +14,13 @@ export const getResult = async (req, res) => {
       }
     }
 
-    const { lat, lng, areaCode, contentType, startDate, category } = req.body;
+    const { lat, lng, areaCode, contenttypeid, startDate, category } = req.body;
     const data = await getWithInKm(
       lat,
       lng,
       200,
       areaCode,
-      contentType,
+      contenttypeid,
       category
     );
 

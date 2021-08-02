@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import SHA256 from "crypto-js/sha256";
 import User from "../../model/User";
+import uuid from "uuid";
 // import SECRET_KEY from "../../config/secretKey";
 
 export const login = async (req, res) => {
@@ -12,9 +13,10 @@ export const login = async (req, res) => {
     const user = await User.findOne({ id, password: encryptedPassword });
 
     if (!user) {
-      res
-        .status(401)
-        .json({ errorMessage: "아이디 또는 비밀번호를 다시 확인해주세요." });
+      res.json({
+        ok: false,
+        errorMessage: "아이디 또는 비밀번호를 다시 확인해주세요.",
+      });
       return;
     }
 
@@ -23,7 +25,7 @@ export const login = async (req, res) => {
       process.env.SECRET_KEY || SECRET_KEY
     );
 
-    res.send({ token });
+    res.send({ ok: true, token });
   } catch (e) {
     console.log(e);
     return res.json({
@@ -39,13 +41,14 @@ export const join = async (req, res) => {
     const encryptedPassword = SHA256(password).toString();
 
     await User.create({
+      socialId: uuid.v4(),
       phoneNumber,
       id,
       password: encryptedPassword,
       nickname,
     });
 
-    res.json({});
+    res.json({ ok: true });
   } catch (e) {
     console.log(e);
     return res.json({

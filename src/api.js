@@ -41,7 +41,6 @@ const getLocationCode = async () => {
     await AreaCodes.create({ code, name, rnum });
   }
 };
-
 //지역기반 관광정보 조회 관광코드 25로 각 지역별 코드별 광관지 1 페이지당 20개씩(테스트 완료)
 const getListData = async () => {
   const codes = await AreaCodes.find({});
@@ -115,7 +114,6 @@ const getListData = async () => {
     }
   }
 };
-
 const getOverView = async (contentId) => {
   const data = await api.get("detailCommon", {
     params: {
@@ -170,7 +168,6 @@ const getCourse = async () => {
     await DataList.findOneAndUpdate({ contentid }, { $set: { overview } });
   }
 };
-
 const getCommonDetail = async () => {
   const lists = await DataList.find({});
   for (let i of lists) {
