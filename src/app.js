@@ -9,6 +9,20 @@ import authRouter from "./Routers/authRouter";
 
 const app = express();
 
+const whiteList = ["http://localhost:3000", "https://localhost:3000"];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log(origin, callback);
+    if (whiteList.indexOf(origin) >= 0 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("당신은 접근이 허용되지 않았습니다."));
+    }
+  },
+};
+
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
